@@ -87,6 +87,9 @@ app.get('/recipes/:id', async (req, res) => {
     
     try {
         const recipeId = await Recipe.findById(req.params.id);
+        if (!recipeId) {
+            return res.status(404).json( {message: "We could not find this recipe"});
+        }
         res.status(200).json(recipeId);
     } catch (error) {
         res.status(500).json({ message: 'Error finding recipe by this ID' });
